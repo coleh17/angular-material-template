@@ -25,14 +25,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 ];
 
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  lastLogin?: Date;
+}
+
+const USERS: User[] = [
+  { id: 1, username: 'admin', email: 'admin@localhost', lastLogin: new Date() },
+  { id: 2, username: 'user', email: 'user@localhost', lastLogin: new Date() },
+];
+
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
   styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['username', 'email', 'lastLogin', 'actions'];
+  dataSource = new MatTableDataSource(USERS);
 
   @ViewChild(MatSort, { static: true })
   sort: MatSort = new MatSort;
@@ -44,9 +56,9 @@ export class CustomerListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('angular-material-template - Customers');
-    this.logger.log('Customers loaded');
-    this.notificationService.openSnackBar('Customers loaded');
+    this.titleService.setTitle('Users');
+    this.logger.log('Users loaded');
+    this.notificationService.openSnackBar('Users loaded');
     this.dataSource.sort = this.sort;
 
   }
